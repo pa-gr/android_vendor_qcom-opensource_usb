@@ -9,7 +9,11 @@ PRODUCT_PROPERTY_OVERRIDES += vendor.usb.dpl.inst.name=dpl
 
 ifneq ($(filter bengal monaco trinket,$(TARGET_BOARD_PLATFORM)),)
   PRODUCT_PROPERTY_OVERRIDES += vendor.usb.controller=4e00000.dwc3
-  PRODUCT_SYSTEM_PROPERTIES += ro.boot.usb.dwc3_msm=4e00000.ssusb
+  ifneq ($(filter bengal,$(TARGET_BOARD_PLATFORM)),)
+    PRODUCT_SYSTEM_PROPERTIES += ro.boot.usb.dwc3_msm=4e00000.ssusb
+  else
+    PRODUCT_SYSTEM_PROPERTIES += ro.boot.usb.dwc3_msm=4e00000.hsusb
+  endif
 else ifneq ($(filter msm8998 sdm660,$(TARGET_BOARD_PLATFORM)),)
   PRODUCT_PROPERTY_OVERRIDES += vendor.usb.controller=a800000.dwc3
 else ifneq ($(filter msm8953,$(TARGET_BOARD_PLATFORM)),)
